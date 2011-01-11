@@ -2,12 +2,14 @@
 
 CURRENT_BRANCH=$(git branch &>/dev/null; if [ $? -eq 0 ]; then echo "$(git branch | grep '^*' |sed s/\*\ //)"; fi)
 HERE=$(pwd)
-NEW=$HERE-$1
+cd ./$(git rev-parse --show-cdup)
+CURRENT_ROOT=$(pwd)
+NEW_ROOT=$CURRENT_ROOT-$1
 git checkout -b $1
 cd ..
-git clone --branch $1 ${HERE}/.git ${NEW}
+git clone --branch $1 ${CURRENT_ROOT}/.git ${NEW_ROOT}
 cd $HERE
 git checkout ${CURRENT_BRANCH}
-echo "Make changes in ${NEW}, commit, then push (to origin)".
+echo "Make changes in ${NEW_ROOT}, commit, then push (to origin)".
 
 exit
