@@ -1,0 +1,18 @@
+#!/bin/bash
+# Script by Richard West rwest@mit.edu
+# For processing RMG results from a computer that doesn't have the dependencies.
+# It copies the data to Rainier, runs the script there, and copies the results back.
+
+RAND=$(( (`od -An -i -N2 /dev/random`) )) # strip the leading space!
+REMOTEDIR=RMGresults-${RAND}
+echo "Temporarily putting things in rainier:"$REMOTEDIR
+# copy things to rainier
+rsync -e ssh -rzt --delete --ignore-errors RMG_Dictionary.txt Final_Model.txt rainier:${REMOTEDIR}
+rsync -e ssh -rzt --delete --ignore-errors chemkin/chem.inp chemkin/tran.dat  rainier:${REMOTEDIR}/chemkin
+# process the results there
+ssh rainier /home/rwest/RMG-Visualizer/processRMGresults.py ${REMOTEDIR}
+# copy things back
+rsync -e ssh -rztu rainier:${REMOTEDIR}/* ./
+# delete the remote stuff
+ssh rainier rm -rf ${REMOTEDIR}
+echo "DONE! Check out your pdfs, pics, etc."
