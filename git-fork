@@ -5,7 +5,7 @@ HERE=$(pwd)
 cd ./$(git rev-parse --show-cdup)
 CURRENT_ROOT=$(pwd)
 NEW_ROOT=$CURRENT_ROOT-$1
-git checkout -b $1
+git checkout -b $1 || exit 1
 cd ..
 git clone --branch $1 ${CURRENT_ROOT}/.git ${NEW_ROOT}
 cd $HERE
