@@ -1,0 +1,22 @@
+!#/bin/sh
+echo "Which version of chemkin?"
+echo "   Chemkin Regular (21 seats)"
+echo "   Chemkin Pro (1 seat)"
+OPTIONS="standard pro"
+select opt in $OPTIONS; do
+    if [ "$opt" = "standard" ]; then
+     xterm -ls -title 'Chemkin Regular - do not close before chemkin!' -bg grey -e ksh "
+     source /home/reaction/chemkin15101_linuxx8664/bin/chemkin_setup.ksh
+     echo 'QUIT CHEMKIN BEFORE CLOSING THIS WINDOW OR YOU MAY NOT CHECK IN THE LICENCE';
+     chemkin-not-pro " &
+     exit
+    elif [ "$opt" = "pro" ]; then
+     xterm -ls -title 'Chemkin Pro - do not close before chemkin!' -bg grey -e ksh "
+     source /home/reaction/chemkin15101_linuxx8664/bin/chemkinpro_setup.ksh;
+     echo 'QUIT CHEMKIN BEFORE CLOSING THIS WINDOW OR YOU MAY NOT CHECK IN THE LICENCE';
+     chemkin " &
+     exit
+    else
+     echo bad option
+    fi
+done
