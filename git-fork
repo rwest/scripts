@@ -7,7 +7,7 @@ CURRENT_ROOT=$(pwd)
 NEW_ROOT=$CURRENT_ROOT-$1
 git checkout -b $1 || exit 1
 cd ..
-git clone --branch $1 ${CURRENT_ROOT}/.git ${NEW_ROOT}
+git clone --shared --branch $1 ${CURRENT_ROOT}/.git ${NEW_ROOT}
 cd $HERE
 git checkout ${CURRENT_BRANCH}
 echo "Make changes in ${NEW_ROOT}, commit, then push (to origin)".
