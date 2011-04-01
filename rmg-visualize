@@ -7,8 +7,10 @@ RAND=$(( (`od -An -i -N2 /dev/random`) )) # strip the leading space!
 REMOTEDIR=RMGresults-${RAND}
 echo "Temporarily putting things in rainier:"$REMOTEDIR
 # copy things to rainier
+ssh rainier mkdir ${REMOTEDIR}
 rsync -e ssh -rzt --delete --ignore-errors RMG_Dictionary.txt Final_Model.txt rainier:${REMOTEDIR}
 rsync -e ssh -rzt --delete --ignore-errors chemkin/chem.inp chemkin/tran.dat  rainier:${REMOTEDIR}/chemkin
+rsync -e ssh -rzt --delete --ignore-errors ODESolver/SpeciesProfiles.*  rainier:${REMOTEDIR}/ODESolver/
 # process the results there
 ssh rainier /home/rwest/RMG-Visualizer/processRMGresults.py ${REMOTEDIR}
 # copy things back
