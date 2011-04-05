@@ -3,8 +3,8 @@
 /home/reaction/licenses/license_utilities/114/linuxx8664/lmutil lmstat -a | grep -E '[^0] licenses? in use'
 
 echo "Which version of chemkin?"
-echo "   Chemkin Regular (21 seats)"
-echo "   Chemkin Pro (1 seat)"
+echo "   Chemkin Regular (20 seats)"
+echo "   Chemkin Pro (4 seats)"
 OPTIONS="standard pro"
 select opt in $OPTIONS; do
     if [ "$opt" = "standard" ]; then
